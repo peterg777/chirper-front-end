@@ -15,14 +15,19 @@ class App extends React.Component {
 
     handleChirpSubmit = e => {
         e.preventDefault();
-        console.log(this.state.message);
         const newChirp = this.state.chirps.slice()
         newChirp.push(this.state.message);
         this.setState({ message: '', chirps: newChirp });
 
     }
-
+    componentDidMount = e => {
+        this.setState({
+            chirps: ['This quarantine is killing me bro']
+        });
+    }
     render() {
+
+
         return (
 
             <main className="container">
@@ -41,14 +46,19 @@ class App extends React.Component {
                         </form>
                     </div>
                 </section>
-                <section className="row my-2 justify-content-center">
-                    <div className="col=md-5">
-                        <form className="form-group p-3 shadow rounded">
-                            <label htmlFor="chirp">Lumberg</label>
-                            <input value={this.state.message} onChange={this.handleMessageChange} type="text" className="form-control" />
-                            <button onClick={this.handleChirpSubmit} className="btn btn-primary">Chirp Details</button>
-                        </form>
-                    </div>
+                <section className="row my-3 justify-content-center">
+                    {this.state.chirps.map((chirp, index) => {
+                        return (
+                            <article className="col-md-7">
+                                <div className="card my-2 shadow">
+                                    <div className="card-body">
+                                        <h4 className="card-title text-center my-auto">{props.text}</h4>
+                                    </div>
+                                </div>
+                            </article>
+                        );
+                    })
+        };
                 </section>
             </main>
 
