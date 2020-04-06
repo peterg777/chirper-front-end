@@ -1,4 +1,6 @@
 import React from 'react'
+import ChirpCard from './components/ChirpCard'
+import Navbar from './components/Navbar'
 
 
 class App extends React.Component {
@@ -6,23 +8,28 @@ class App extends React.Component {
         super(props);
         this.state = {
             message: '',
-            chirps: []
+            chirps: [],
+            userName: ''
 
         };
     };
 
     handleMessageChange = e => this.setState({ message: e.target.value });
+    handleuserNameChange = e => this.setState({ userName: e.target.value });
 
     handleChirpSubmit = e => {
         e.preventDefault();
         const newChirp = this.state.chirps.slice()
-        newChirp.push(this.state.message);
+        const chirpObj = {
+            userName:this.state.userName, message:this.state.message
+        }
+        newChirp.unshift(chirpObj);
         this.setState({ message: '', chirps: newChirp });
 
     }
-    componentDidMount = e => {
+    componentDidMount() {
         this.setState({
-            chirps: ['This quarantine is killing me bro']
+            chirps: ['Peter Chirped-This quarantine is killing me bro']
         });
     }
     render() {
@@ -31,34 +38,24 @@ class App extends React.Component {
         return (
 
             <main className="container">
-                <nav className="navbar navbar-dark bg-dark">
-                    <form className="form-inline">
-                        <button className="btn btn-outline-danger" type="button">Chirps</button>
-                        <button className="btn btn-outline-warning" type="button">Add Chirps</button>
-                    </form>
-                </nav>
+                <Navbar/>
                 <section className="row my-2 justify-content-center">
                     <div className="col=md-5">
                         <form className="form-group p-3 shadow rounded">
-                            <label htmlFor="chirp">Milton</label>
+                        <input value={this.state.userName} onChange={this.handleuserNameChange} type="text" className="form-control" />
+                            
                             <input value={this.state.message} onChange={this.handleMessageChange} type="text" className="form-control" />
                             <button onClick={this.handleChirpSubmit} className="btn btn-success">Chirp Details</button>
                         </form>
                     </div>
                 </section>
                 <section className="row my-3 justify-content-center">
-                    {this.state.chirps.map((chirp, index) => {
+                    {this.state.chirps.map((chirp) => {
                         return (
-                            <article className="col-md-7">
-                                <div className="card my-2 shadow">
-                                    <div className="card-body">
-                                        <h4 className="card-title text-center my-auto">{props.text}</h4>
-                                    </div>
-                                </div>
-                            </article>
+                            <ChirpCard key={chirp} garbage={chirp}/>
                         );
                     })
-        };
+                    };
                 </section>
             </main>
 
