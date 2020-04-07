@@ -28,9 +28,7 @@ class App extends React.Component {
 
     }
     componentDidMount() {
-        this.setState({ 
-            chirps: ['Peter Chirped-This quarantine is killing me bro']
-        });
+        this.setState({userName:'Peter chirps', message: 'This quarantine is killing me bro'});
     }
     render() {
 
